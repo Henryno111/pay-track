@@ -47,8 +47,11 @@
     )
         ;; Pay each recipient
         (try! (fold pay-one recipients (ok net-amount)))
-        ;; Collect fee
-        (try! (stx-transfer? fee tx-sender contract-owner))
+        ;; Collect fee (skip if sender is contract owner)
+        (if (is-eq tx-sender contract-owner)
+            true
+            (try! (stx-transfer? fee tx-sender contract-owner))
+        )
         (var-set total-fees (+ (var-get total-fees) fee))
         (ok true)
     )
