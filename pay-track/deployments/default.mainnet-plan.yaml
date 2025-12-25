@@ -11,21 +11,21 @@ plan:
         - contract-publish:
             contract-name: escrow-service
             expected-sender: SPD7WQ5ZTDXV45D3ZCY00N1WTRF106SH9XA0D979
-            cost: 728609
+            cost: 35480
             path: contracts/escrow-service.clar
             anchor-block-only: true
             clarity-version: 4
         - contract-publish:
             contract-name: payment-processor
             expected-sender: SPD7WQ5ZTDXV45D3ZCY00N1WTRF106SH9XA0D979
-            cost: 728369
+            cost: 20060
             path: contracts/payment-processor.clar
             anchor-block-only: true
             clarity-version: 4
         - contract-publish:
             contract-name: user-registry
             expected-sender: SPD7WQ5ZTDXV45D3ZCY00N1WTRF106SH9XA0D979
-            cost: 728309
+            cost: 15350
             path: contracts/user-registry.clar
             anchor-block-only: true
             clarity-version: 4
