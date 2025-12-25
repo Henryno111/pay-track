@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { callReadOnlyFunction, cvToValue, principalCV } from '@stacks/transactions';
-import { StacksTestnet } from '@stacks/network';
+import { StacksTestnet, StacksMainnet } from '@stacks/network';
+
+const USE_MAINNET = process.env.REACT_APP_NETWORK === 'mainnet';
+const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 
 function Dashboard({ userAddress }) {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const network = new StacksTestnet();
+  const network = USE_MAINNET ? new StacksMainnet() : new StacksTestnet();
 
   useEffect(() => {
     loadUserData();
@@ -15,7 +18,7 @@ function Dashboard({ userAddress }) {
     try {
       // Call read-only function to get user data
       const result = await callReadOnlyFunction({
-        contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+        contractAddress: CONTRACT_ADDRESS,
         contractName: "user-registry",
         functionName: "get-user",
         functionArgs: [principalCV(userAddress)],
