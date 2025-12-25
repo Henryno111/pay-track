@@ -66,7 +66,7 @@
             (let ((payment (/ (* net-amount (get percentage recipient-data)) u10000)))
                 (match (stx-transfer? payment tx-sender (get recipient recipient-data))
                     success (ok net-amount)
-                    error (err error)
+                    error (err u1)
                 )
             )
         error (err error)

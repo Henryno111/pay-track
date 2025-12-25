@@ -115,7 +115,7 @@ describe("Multi-Sig Escrow Contract Tests", () => {
         "required-sigs": Cl.uint(2),
         "release-sigs": Cl.uint(2),
         "refund-sigs": Cl.uint(0),
-        "expires-at": Cl.uint(simnet.blockHeight + 99),
+        "expires-at": Cl.uint(simnet.blockHeight + 98),
         status: Cl.stringAscii("released"),
       })
     );
@@ -192,7 +192,7 @@ describe("Multi-Sig Escrow Contract Tests", () => {
         "required-sigs": Cl.uint(2),
         "release-sigs": Cl.uint(0),
         "refund-sigs": Cl.uint(2),
-        "expires-at": Cl.uint(simnet.blockHeight + 99),
+        "expires-at": Cl.uint(simnet.blockHeight + 98),
         status: Cl.stringAscii("refunded"),
       })
     );

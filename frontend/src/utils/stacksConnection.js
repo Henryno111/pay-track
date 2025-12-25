@@ -121,3 +121,161 @@ export const releaseEscrow = async (escrowId) => {
   const transaction = await makeContractCall(txOptions);
   return broadcastTransaction(transaction, network);
 };
+
+// Refund escrow
+export const refundEscrow = async (escrowId) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "escrow-service",
+    functionName: "refund-escrow",
+    functionArgs: [uintCV(escrowId)],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+// Multi-sig escrow functions
+export const createMultiSigEscrow = async (seller, amount, duration, requiredSigs) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "multisig-escrow",
+    functionName: "create-escrow",
+    functionArgs: [
+      principalCV(seller),
+      uintCV(amount),
+      uintCV(duration),
+      uintCV(requiredSigs)
+    ],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+export const signEscrowRelease = async (escrowId) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "multisig-escrow",
+    functionName: "sign-release",
+    functionArgs: [uintCV(escrowId)],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+export const signEscrowRefund = async (escrowId) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "multisig-escrow",
+    functionName: "sign-refund",
+    functionArgs: [uintCV(escrowId)],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+// Payment splitter functions
+export const createSplit = async (recipients, percentages, description) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "payment-splitter",
+    functionName: "create-split",
+    functionArgs: [
+      // Convert arrays to Clarity list format - implementation depends on @stacks/transactions version
+      // This is a placeholder - actual implementation may need adjustment
+      recipients,
+      percentages,
+      stringUtf8CV(description)
+    ],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+export const executeSplit = async (splitId, amount) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "payment-splitter",
+    functionName: "execute-split",
+    functionArgs: [
+      uintCV(splitId),
+      uintCV(amount)
+    ],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+// Recurring payment functions
+export const createSubscription = async (recipient, amount, interval, description) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "recurring-payment",
+    functionName: "create-subscription",
+    functionArgs: [
+      principalCV(recipient),
+      uintCV(amount),
+      uintCV(interval),
+      stringUtf8CV(description)
+    ],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+export const processSubscription = async (subscriptionId) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "recurring-payment",
+    functionName: "process-payment",
+    functionArgs: [uintCV(subscriptionId)],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};
+
+export const cancelSubscription = async (subscriptionId) => {
+  const txOptions = {
+    contractAddress: CONTRACT_ADDRESS,
+    contractName: "recurring-payment",
+    functionName: "cancel-subscription",
+    functionArgs: [uintCV(subscriptionId)],
+    network,
+    anchorMode: AnchorMode.Any,
+    postConditionMode: PostConditionMode.Allow,
+  };
+
+  const transaction = await makeContractCall(txOptions);
+  return broadcastTransaction(transaction, network);
+};

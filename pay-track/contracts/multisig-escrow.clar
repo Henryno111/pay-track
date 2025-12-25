@@ -82,12 +82,13 @@
             { escrow-id: escrow-id, signer: tx-sender }
             (merge sig { signed-release: true })
         )
-        (let ((new-count (+ (get release-sigs escrow) u1)))
-            (map-set escrows escrow-id
-                (merge escrow { release-sigs: new-count })
-            )
+        (let (
+            (new-count (+ (get release-sigs escrow) u1))
+            (updated-escrow (merge escrow { release-sigs: new-count }))
+        )
+            (map-set escrows escrow-id updated-escrow)
             (if (>= new-count (get required-sigs escrow))
-                (release-escrow-internal escrow-id (merge escrow { release-sigs: new-count }))
+                (release-escrow-internal escrow-id updated-escrow)
                 (ok true)
             )
         )
@@ -106,12 +107,13 @@
             { escrow-id: escrow-id, signer: tx-sender }
             (merge sig { signed-refund: true })
         )
-        (let ((new-count (+ (get refund-sigs escrow) u1)))
-            (map-set escrows escrow-id
-                (merge escrow { refund-sigs: new-count })
-            )
+        (let (
+            (new-count (+ (get refund-sigs escrow) u1))
+            (updated-escrow (merge escrow { refund-sigs: new-count }))
+        )
+            (map-set escrows escrow-id updated-escrow)
             (if (>= new-count (get required-sigs escrow))
-                (refund-escrow-internal escrow-id (merge escrow { refund-sigs: new-count }))
+                (refund-escrow-internal escrow-id updated-escrow)
                 (ok true)
             )
         )
