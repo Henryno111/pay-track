@@ -3,7 +3,6 @@
 
 (define-constant contract-owner tx-sender)
 (define-constant platform-fee-percentage u2) ;; 2% platform fee
-(define-constant err-not-authorized (err u999))
 
 (define-map payment-history
   { payment-id: uint }
@@ -33,7 +32,7 @@
     (asserts! (not (is-eq tx-sender recipient)) (err u201)) ;; Cannot send to self
     (asserts! (> net-amount u0) (err u202)) ;; Net amount must be positive
     
-    ;; Transfer to recipient (fee stays with sender as implicit cost)
+    ;; Transfer tokens
     (try! (stx-transfer? net-amount tx-sender recipient))
     
     ;; Record payment

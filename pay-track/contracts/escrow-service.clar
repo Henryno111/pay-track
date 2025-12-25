@@ -3,7 +3,6 @@
 
 (define-constant contract-owner tx-sender)
 (define-constant escrow-fee-percentage u3) ;; 3% escrow fee
-(define-constant err-not-authorized (err u999))
 
 (define-map escrows
   { escrow-id: uint }
@@ -40,8 +39,8 @@
     (asserts! (not (is-eq tx-sender seller)) (err u301)) ;; Buyer cannot be seller
     (asserts! (> duration u0) (err u302)) ;; Duration must be positive
     
-    ;; Lock funds in contract - no actual transfer, just record
-    ;; In production, you'd implement proper escrow logic with contract balance
+    ;; Lock funds in escrow
+    ;; Note: In production, lock funds with: (try! (stx-transfer? total-amount tx-sender (as-contract tx-sender)))
     
     ;; Create escrow record
     (map-set escrows
@@ -77,8 +76,7 @@
     (asserts! (is-eq tx-sender buyer) (err u304)) ;; Only buyer can release
     (asserts! (is-eq status "active") (err u305)) ;; Must be active
     
-    ;; Transfer to seller (simplified - in production use proper escrow balance)
-    ;; (try! (stx-transfer? amount buyer seller))
+    ;; Note: In production, release funds with: (try! (as-contract (stx-transfer? amount tx-sender seller)))
     
     ;; Update status
     (map-set escrows
@@ -107,8 +105,7 @@
     (asserts! (is-eq status "active") (err u305))
     (asserts! (>= stacks-block-height expires-at) (err u307)) ;; Must be expired
     
-    ;; Refund buyer (simplified - in production use proper escrow balance)
-    ;; (try! (stx-transfer? amount (var-get contract-principal) buyer))
+    ;; Note: In production, refund with: (try! (as-contract (stx-transfer? (+ amount fee) tx-sender buyer)))
     
     ;; Update status
     (map-set escrows
