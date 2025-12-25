@@ -13,8 +13,12 @@ import { StacksTestnet, StacksMainnet } from "@stacks/network";
 const appConfig = new AppConfig(["store_write", "publish_data"]);
 export const userSession = new UserSession({ appConfig });
 
-// Network configuration
-const network = new StacksTestnet(); // Change to StacksMainnet for production
+// Network configuration - Change to StacksMainnet() for production
+const USE_MAINNET = process.env.REACT_APP_NETWORK === 'mainnet';
+const network = USE_MAINNET ? new StacksMainnet() : new StacksTestnet();
+
+// Contract address - Update after deployment
+const CONTRACT_ADDRESS = process.env.REACT_APP_CONTRACT_ADDRESS || "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 
 // Connect wallet
 export const connectWallet = () => {
@@ -40,7 +44,7 @@ export const disconnectWallet = () => {
 export const getUserAddress = () => {
   if (userSession.isUserSignedIn()) {
     const userData = userSession.loadUserData();
-    return userData.profile.stxAddress.testnet; // Use .mainnet for production
+    return USE_MAINNET ? userData.profile.stxAddress.mainnet : userData.profile.stxAddress.testnet;
   }
   return null;
 };
@@ -48,7 +52,7 @@ export const getUserAddress = () => {
 // Register user
 export const registerUser = async (username) => {
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", // Replace with your deployed contract
+    contractAddress: CONTRACT_ADDRESS,
     contractName: "user-registry",
     functionName: "register-user",
     functionArgs: [stringUtf8CV(username)],
@@ -64,7 +68,7 @@ export const registerUser = async (username) => {
 // Send payment
 export const sendPayment = async (recipient, amount, memo) => {
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", // Replace
+    contractAddress: CONTRACT_ADDRESS,
     contractName: "payment-processor",
     functionName: "send-payment",
     functionArgs: [
@@ -84,7 +88,7 @@ export const sendPayment = async (recipient, amount, memo) => {
 // Create escrow
 export const createEscrow = async (seller, amount, duration, description) => {
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", // Replace
+    contractAddress: CONTRACT_ADDRESS,
     contractName: "escrow-service",
     functionName: "create-escrow",
     functionArgs: [
@@ -105,7 +109,7 @@ export const createEscrow = async (seller, amount, duration, description) => {
 // Release escrow
 export const releaseEscrow = async (escrowId) => {
   const txOptions = {
-    contractAddress: "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM", // Replace
+    contractAddress: CONTRACT_ADDRESS,
     contractName: "escrow-service",
     functionName: "release-escrow",
     functionArgs: [uintCV(escrowId)],
