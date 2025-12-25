@@ -4,6 +4,7 @@ import { initializeWalletConnect } from './utils/walletconnect';
 import PaymentForm from './components/PaymentForm';
 import EscrowForm from './components/EscrowForm';
 import Dashboard from './components/Dashboard';
+import StacksPayLogo from './components/StacksPayLogo';
 
 function App() {
   const [isConnected, setIsConnected] = useState(false);
@@ -37,9 +38,7 @@ function App() {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold text-gray-900">
-              Stacks Fintech Platform
-            </h1>
+            <StacksPayLogo className="h-12" />
             {!isConnected ? (
               <button
                 onClick={handleConnect}

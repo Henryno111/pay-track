@@ -17,6 +17,18 @@ epoch = "latest"
 path = "contracts/escrow-service.clar"
 epoch = "latest"
 
+[contracts.payment-splitter]
+path = "contracts/payment-splitter.clar"
+epoch = "latest"
+
+[contracts.recurring-payment]
+path = "contracts/recurring-payment.clar"
+epoch = "latest"
+
+[contracts.multisig-escrow]
+path = "contracts/multisig-escrow.clar"
+epoch = "latest"
+
 [repl.analysis]
 passes = ["check_checker"]
 check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }

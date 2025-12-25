@@ -69,9 +69,24 @@ plan:
             path: contracts/escrow-service.clar
             clarity-version: 4
         - emulated-contract-publish:
+            contract-name: multisig-escrow
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: contracts/multisig-escrow.clar
+            clarity-version: 4
+        - emulated-contract-publish:
             contract-name: payment-processor
             emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
             path: contracts/payment-processor.clar
+            clarity-version: 4
+        - emulated-contract-publish:
+            contract-name: payment-splitter
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: contracts/payment-splitter.clar
+            clarity-version: 4
+        - emulated-contract-publish:
+            contract-name: recurring-payment
+            emulated-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            path: contracts/recurring-payment.clar
             clarity-version: 4
         - emulated-contract-publish:
             contract-name: user-registry
