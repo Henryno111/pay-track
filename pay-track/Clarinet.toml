@@ -1,13 +1,21 @@
 [project]
 name = "pay-track"
-description = ""
+description = "Decentralized payment and escrow platform on Stacks"
 authors = []
 telemetry = true
 cache_dir = "./.cache"
 
-# [contracts.counter]
-# path = "contracts/counter.clar"
-# epoch = "latest"
+[contracts.user-registry]
+path = "contracts/user-registry.clar"
+epoch = "latest"
+
+[contracts.payment-processor]
+path = "contracts/payment-processor.clar"
+epoch = "latest"
+
+[contracts.escrow-service]
+path = "contracts/escrow-service.clar"
+epoch = "latest"
 
 [repl.analysis]
 passes = ["check_checker"]
